@@ -1,15 +1,3 @@
-window.requestAnimFrame = (function(){
-    return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function(callback, element) {
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
-var requestAnimationFrame = window.requestAnimFrame;
-
 //var epsg = '3857';
 var epsg = '4326';
 var namespace = 'test.issinc.com';
@@ -50,7 +38,7 @@ function displayLayers() {
     }
     $("#layerListDiv").append(s);
 }
-displayLayers();
+//displayLayers();
 
 function getLayerXML(newLayerName) {
     return "<featureType>"

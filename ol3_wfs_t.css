@@ -42,27 +42,27 @@
 }
 
 #btnPoint {
-    background-image: url(../img/point.png);
+    background-image: url(./img/point.png);
 }
 
 #btnLine {
-    background-image: url(../img/line.png);
+    background-image: url(./img/line.png);
 }
 
 #btnPolygon {
-    background-image: url(../img/polygon.png);
+    background-image: url(./img/polygon.png);
 }
 
 #btnModify {
-    background-image: url(../img/modify.png);
+    background-image: url(./img/modify.png);
 }
 
 #btnDelete {
-    background-image: url(../img/delete.png);
+    background-image: url(./img/delete.png);
 }
 
 #btnSelect {
-    background-image: url(../img/select.png);
+    background-image: url(./img/select.png);
 }
 
 .btn-active {
