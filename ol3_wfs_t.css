@@ -1,0 +1,86 @@
+.map {
+    width: 100%;
+    height: 600px;
+    box-shadow: 5px 5px 5px #888;
+}
+
+#readTextArea {
+    height: 150px;
+    width: 75%;
+}
+
+#writeTextArea {
+    height: 150px;
+    width: 75%;
+}
+
+#layerList {
+    height: 100px;
+    width: 75%;
+}
+
+#left {
+    page-break-inside: avoid;
+    max-width: 55%;
+    width: 100%;
+    float: left;
+}
+
+.right {
+    page-break-inside: avoid;
+    max-width: 40%;
+    width: 100%;
+    float: right;
+}
+
+.selection {
+    background-size: 35px 35px;
+    height: 40px;
+    width: 40px;
+    margin-right: 1%;
+    float: right;
+}
+
+#btnPoint {
+    background-image: url(../img/point.png);
+}
+
+#btnLine {
+    background-image: url(../img/line.png);
+}
+
+#btnPolygon {
+    background-image: url(../img/polygon.png);
+}
+
+#btnModify {
+    background-image: url(../img/modify.png);
+}
+
+#btnDelete {
+    background-image: url(../img/delete.png);
+}
+
+#btnSelect {
+    background-image: url(../img/select.png);
+}
+
+.btn-active {
+    background-color: #38adc7 !important;
+}
+
+#addButton {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(66, 184, 221);
+}
+
+.layerButton {
+    height: 35px;
+    width: 150px;
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(112, 128, 144);
+}
