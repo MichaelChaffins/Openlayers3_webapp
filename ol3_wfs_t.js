@@ -1,11 +1,11 @@
-//var epsg = '3857';
-var epsg = '4326';
-var namespace = 'test.issinc.com';
-var workspace = 'Test';
-var databaseName = 'Test';
+//const epsg = '3857';
+const epsg = '4326';
+const namespace = 'test.issinc.com';
+const workspace = 'Test';
+const databaseName = 'Test';
 
+var featureLayerName;
 var interaction;
-var features = new ol.Collection();
 var format;
 var inputProjection;
 var outputProjection;
@@ -19,8 +19,8 @@ function getLayers(url){
 
 function displayLayers() {
     var json_obj = JSON.parse(getLayers('http://localhost:8080/geoserver/rest/workspaces/' + workspace + '/featuretypes.json'));
-    var s = $('<input type="button" id="addButton" value="Add Layer" onclick="addNewLayer();"/><br>');
-    if (json_obj.featureTypes.length < 1) {
+    var featureTypes = json_obj.featureTypes;
+    if (featureTypes.length < 1) {
         $("#layerListDiv").append(s);
         return;
     }
@@ -36,9 +36,10 @@ function displayLayers() {
                 + '" onclick="refreshLayer(\'' + layerName + '\');"/><br><br>');
         $("#layerListDiv").append(r);    
     }
+    var s = $('<input type="button" id="addButton" value="Add Layer" onclick="addNewLayer();"/><br>');
     $("#layerListDiv").append(s);
 }
-//displayLayers();
+displayLayers();
 
 function getLayerXML(newLayerName) {
     return "<featureType>"
@@ -111,7 +112,7 @@ var sourceWFS;
 function refreshLayer(layerName) {
     $("#currentLayer").html('');
     $("#currentLayer").append(layerName);
-    gmlfeaturetype = layerName;
+    featureLayerName = layerName;
     layer = layerName;
     sourceWFS = new ol.source.Vector({  
     loader: function(extent) {
@@ -123,8 +124,6 @@ function refreshLayer(layerName) {
                 request: 'GetFeature',
                 typename: 'Test:' + layer,
                 srsname: 'EPSG:' + epsg,
-                //outputFormat: 'application/json',
-                request: 'GetFeature',
                 bbox: extent.join(',') + ',EPSG:' + epsg,
             }
         }).done(function(response) {
@@ -182,13 +181,13 @@ map.addControl(scaleLine);
 var zoomControl = new ol.control.Zoom();
 map.addControl(zoomControl);
 
-//wfs-t 
+// wfs-t
 var formatGML;
 var dirty = {};
 var transactWFS = function (mode, f) {
     formatGML = new ol.format.GML({
         featureNS: namespace,
-        featureType: gmlfeaturetype,
+        featureType: featureLayerName,
         srsName: 'EPSG:4326',
     });
     var node;
@@ -309,7 +308,7 @@ $('button').click(function () {
         case 'btnSelect':
             interaction = new ol.interaction.Select();
             map.on("click", function (e) {
-                map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+                map.forEachFeatureAtPixel(e.pixel, function (feature) {
                     writeSelectedFeature(feature);
                 })
             });
@@ -329,7 +328,7 @@ function updateMouseProjection() {
     if (mousePosition != null) {
         map.removeControl(mousePosition);
     }
-    var mousePositionProjection = document.getElementById("mouseproj").value;
+    var mousePositionProjection = document.getElementById("mouseProjection").value;
     mousePosition = new ol.control.MousePosition({
         coordinateFormat: ol.coordinate.createStringXY(2),
         projection: mousePositionProjection
@@ -339,18 +338,18 @@ function updateMouseProjection() {
 updateMouseProjection();
 
 function updateInputProjection() {
-    inputProjection = document.getElementById("inproj").value;
+    inputProjection = document.getElementById("inputProjection").value;
 }
 updateInputProjection();
 
 function updateOutputProjection() {
-    outputProjection = document.getElementById("outproj").value;
+    outputProjection = document.getElementById("outputProjection").value;
 }
 updateOutputProjection();
 
 /**
  * CHANGE PROJECTION FORMAT
- */
+
 
 function to4326() {
     var source = layerWFS.getSource();
@@ -369,7 +368,7 @@ function to3857() {
         geometry.transform('EPSG:4326', 'EPSG:3857');
     });
 }
-
+*/
 /**
  * READ DATA FROM TEXTBOX
  */
@@ -380,7 +379,7 @@ function readData() {
     source.clear();
     var data = document.getElementById("readTextArea").value;
     if(inputProjection === "EPSG:4326") {
-        to4326()
+        to4326();
         featuresRead = format.readFeatures(data);
         source.addFeatures(featuresRead);
         to3857();
@@ -399,27 +398,25 @@ function writeAllFeatures() {
     var source = layerWFS.getSource();
     var features = source.getFeatures();
     if(outputProjection === "EPSG:4326") {
-        to4326();
+        //to4326();
         data = format.writeFeatures(features);
         document.getElementById("writeTextArea").innerHTML = data;
         to3857();
     } else {
         data = format.writeFeatures(features);
-        var jsonPretty = JSON.stringify(JSON.parse(data),null,2);  
-        document.getElementById("writeTextArea").innerHTML = jsonPretty;
+        document.getElementById("writeTextArea").innerHTML = JSON.stringify(JSON.parse(data),null,2);;
     }
 }
 
 function writeSelectedFeature(selectedFeature) {
     var data;
     if(outputProjection === "EPSG:4326") {
-        to4326();
+        //to4326();
         data = format.writeFeature(selectedFeature);
         document.getElementById("writeTextArea").innerHTML = data;
         to3857();
     } else {
         data = format.writeFeature(selectedFeature);
-        var jsonPretty = JSON.stringify(JSON.parse(data),null,2);
-        document.getElementById("writeTextArea").innerHTML = jsonPretty;
+        document.getElementById("writeTextArea").innerHTML = JSON.stringify(JSON.parse(data),null,2);
     }
 }

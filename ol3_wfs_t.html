@@ -8,11 +8,9 @@
     <link rel="stylesheet" href="https://openlayers.org/en/v3.19.1/css/ol.css" type="text/css">
     <!-- Our app CSS -->
     <link rel="stylesheet" href="./ol3_wfs_t.css" type="text/css">
-    
 </head>
 
 <body>
-
     <div id="left" class="left">    
         <span>Current Layer: </span>
         <span id="currentLayer"></span>
@@ -30,13 +28,13 @@
                 <option value="kml">KML</option>
                 <option value="wkt">Well-Known Text (WKT)</option>
                 <option value="gpx">GPX</option>
-            </select><br><br> Input Projection: <select id="inproj" onchange='updateInputProjection()'>
+            </select><br><br> Input Projection: <select id="inputProjection" onchange='updateInputProjection()'>
                 <option value="EPSG:3857">EPSG:3857</option> 
                 <option value="EPSG:4326" selected="selected">EPSG:4326</option>
-            </select> <br> Output Projection: <select id="outproj" onchange='updateOutputProjection()'>
+            </select> <br> Output Projection: <select id="outputProjection" onchange='updateOutputProjection()'>
                 <option value="EPSG:3857">EPSG:3857</option> 
                 <option value="EPSG:4326" selected="selected">EPSG:4326</option>
-            </select> <br> Mouse Coordinate Projection: <select id="mouseproj" onchange='updateMouseProjection()'>
+            </select> <br> Mouse Coordinate Projection: <select id="mouseProjection" onchange='updateMouseProjection()'>
                 <option value="EPSG:3857">EPSG:3857</option> 
                 <option value="EPSG:4326" selected="selected">EPSG:4326</option>
             </select>
@@ -55,12 +53,11 @@
     </div>
     
     <!-- OpenLayers js -->
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList"></script>
     <script src="https://openlayers.org/en/v3.19.1/build/ol.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- Webapp js -->
     <script src="./ol3_wfs_t.js"></script>
-
 </body>
 
 </html>
